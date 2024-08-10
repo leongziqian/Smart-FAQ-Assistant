@@ -52,15 +52,17 @@ def main():
     user_question = st.text_input("Ask a question about health:")
     if st.button("Get Answer"):
         if user_question:
-            best_answer = find_best_answer(user_question)
+            best_answer, similarity_score = find_best_answer(user_question)
+            st.write(f"Similarity Score: {similarity_score:.2f}")
             st.write(best_answer)
+            
+            # Rating system
+            rating = st.slider("Rate the helpfulness of the answer", 1, 5, 3)
+            st.write(f"Thank you for rating this answer: {rating} star(s)")
         else:
             st.write("Please enter a question.")
             
 #Additional Features (Optional)
-if st.button("Clear"):
-    st.text_area("Ask a question about heart, lung, or blood health:", value="", key="reset")
-
 st.sidebar.title("FAQs")
 st.sidebar.write("what is are cardiomyopathy?")
 st.sidebar.write("who is at risk for cardiomyopathy")
