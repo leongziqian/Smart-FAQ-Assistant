@@ -49,7 +49,7 @@ def find_best_answer(user_question):
 def main():
     st.title("Heart, Lung, and Blood Health Q&A")
 
-    user_question = st.text_input("Ask a question about health:)
+    user_question = st.text_input("Ask a question about health:")
     if st.button("Get Answer"):
         if user_question:
             best_answer = find_best_answer(user_question)
