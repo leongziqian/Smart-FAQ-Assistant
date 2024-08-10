@@ -11,7 +11,7 @@ model = "text-embedding-ada-002"
 
 # Load your dataset
 try:
-    df = pd.read_csv('qa_dataset_with_embeddings (3).csv')
+    df = pd.read_csv('qa_dataset_with_embeddings.csv')
     # Convert the 'Question_Embedding' column from string to actual NumPy arrays
     df['Question_Embedding'] = df['Question_Embedding'].apply(lambda x: np.array(eval(x)))
 except Exception as e:
@@ -56,10 +56,13 @@ def main():
             st.write(best_answer)
         else:
             st.write("Please enter a question.")
-
- Additional Features (Optional)
+            
+#Additional Features (Optional)
 if st.button("Clear"):
     st.text_area("Ask a question about heart, lung, or blood health:", value="", key="reset")
+
+st.sidebar.title("FAQs")
+st.sidebar.write("Common questions related to heart, lung, and blood health will be displayed here.")
 
 if __name__ == "__main__":
     main()
