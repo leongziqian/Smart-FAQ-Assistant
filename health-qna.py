@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import openai
 from openai.embeddings_utils import cosine_similarity
-
+import ast
 
 # Load Data & Embeddings
 @st.cache_data
