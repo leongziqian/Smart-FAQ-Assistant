@@ -16,8 +16,11 @@ df = load_data()
 
 # Function to get embedding
 def get_embedding(text, model="text-embedding-ada-002"):
-   return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
-
+    try:
+        return openai.Embedding.create(input=[text], model=model)['data'][0]['embedding']
+    except openai.error.APIError as e:
+        st.error(f"Error generating embedding: {e}")
+        return None
 
 # Build the Streamlit Interface
 st.title("Heart, Lung, and Blood Health Q&A")
@@ -28,20 +31,24 @@ similarity_threshold = 0.8  # Set a threshold for similarity
 if st.button("Get Answer"):
     if user_question:
         # Generate an embedding for the user's question
-        user_embedding = get_embedding(user_question)  # Ensure `get_embedding` is defined or remove if not needed
-        
+        user_embedding = get_embedding(user_question)
+
         if user_embedding is not None:
             # Calculate cosine similarities
             df['Similarity'] = df['Question_Embedding'].apply(lambda x: cosine_similarity(x, user_embedding))
-            
-            # Find the most similar question
-            best_match = df.loc[df['Similarity'].idxmax()]
-            
-            # Display the answer if similarity is above the threshold
-            if best_match['Similarity'] >= similarity_threshold:
+
+            # Find the most similar question and get its corresponding answer
+            most_similar_index = df['Similarity'].idxmax()
+            max_similarity = df['Similarity'].max()
+
+            # Set a similarity threshold to determine if a question is relevant enough
+            similarity_threshold = 0.6  # You can adjust this value
+
+            if max_similarity >= similarity_threshold:
+                best_answer = df.loc[most_similar_index, 'Answer']
                 st.subheader("Answer:")
-                st.write(best_match['Answer'])
-                st.write(f"**Similarity Score:** {best_match['Similarity']:.2f}")
+                st.write(best_answer)
+                st.write(f"**Similarity Score:** {max_similarity:.2f}")
             else:
                 st.write("I apologize, but I don't have information on that topic yet. Could you please ask other questions?")
         else:
