@@ -13,11 +13,9 @@ def load_data():
 
 df = load_data()
 
-def get_embedding(text):
-  # Use OpenAI or another embedding model to generate an embedding
-  response = openai.Embedding.create(input=[text])
-  embedding = response['data'][0]['embedding']
-  return embedding
+# Function to get embedding
+def get_embedding(text, model="text-embedding-ada-002"):
+   return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
     
 # Build the Streamlit Interface
 st.title("Heart, Lung, and Blood Health Q&A")
