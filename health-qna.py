@@ -42,7 +42,7 @@ def find_best_answer(user_question):
 
     if max_similarity >= similarity_threshold:
         best_answer = df.loc[most_similar_index, 'Answer']
-        return best_answer
+        return best_answer, max_similarity
     else:
         return "I apologize, but I don't have information on that topic yet. Could you please ask other questions?"
 
