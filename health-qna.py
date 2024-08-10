@@ -16,9 +16,6 @@ df = load_data()
 
 openai.api_key = st.secrets["mykey"]
 
-def get_embedding(text, model="text-embedding-ada-002"):
-    return openai.Embedding.create(input=[text], model=model)['data'][0]['embedding']
-
 # Build the Streamlit Interface
 st.title("Heart, Lung, and Blood Health Q&A")
 
