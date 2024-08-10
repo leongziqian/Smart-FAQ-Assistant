@@ -62,7 +62,8 @@ if st.button("Clear"):
     st.text_area("Ask a question about heart, lung, or blood health:", value="", key="reset")
 
 st.sidebar.title("FAQs")
-st.sidebar.write("Common questions related to heart, lung, and blood health will be displayed here.")
+st.sidebar.write("what is are cardiomyopathy?")
+st.sidebar.write("who is at risk for cardiomyopathy")
 
 if __name__ == "__main__":
     main()
