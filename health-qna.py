@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import openai
 from openai.embeddings_utils import cosine_similarity
 
 # Load Data & Embeddings
