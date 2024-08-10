@@ -17,8 +17,6 @@ df = load_data()
 def get_embedding(text, model="text-embedding-ada-002"):
    return openai.Embedding.create(input = [text], model=model)['data'][0]['embedding']
 
-# Convert the string embeddings back to lists
-df['Question_Embedding'] = df['Question_Embedding'].apply(ast.literal_eval)   
 
 # Build the Streamlit Interface
 st.title("Heart, Lung, and Blood Health Q&A")
