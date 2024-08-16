@@ -34,7 +34,7 @@ def find_best_answer(user_question):
     user_question_embedding = get_embedding(user_question)
 
     # Calculate cosine similarities for all questions in the dataset
-    df['Similarity'] = df['Question_Embedding'].apply(lambda x: cosine_similarity(x.reshape(1, -1), user_question_embedding))
+    df['Similarity'] = df['Question_Embedding'].apply(lambda x: cosine_similarity(x.reshape(1, -1), user_question_embedding).flatten()[0])
 
     # Find the most similar question and get its corresponding answer
     most_similar_index = df['Similarity'].idxmax()
