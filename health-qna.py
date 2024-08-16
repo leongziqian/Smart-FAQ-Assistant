@@ -51,6 +51,24 @@ def find_best_answer(user_question):
 # Main function to run the Streamlit app
 def main():
     st.title("Heart, Lung, and Blood Health Q&A")
+    
+    # Initialize session state to store FAQ question and answer
+    if "faq_answer" not in st.session_state:
+        st.session_state.faq_answer = None
+        st.session_state.faq_question = None
+
+    # Sidebar with dynamic FAQs
+    st.sidebar.title("FAQs")
+
+    # Randomly pick a few questions and answers from the DataFrame
+    num_faqs = 5  # Number of FAQs to display
+    faq_indices = random.sample(range(len(df)), num_faqs)
+    faq_list = df.loc[faq_indices, ['Question', 'Answer']].values.tolist()
+
+    # Display FAQ questions and answers in the sidebar
+    for question, answer in faq_list:
+        with st.sidebar.expander(question):
+            st.write(f"**Answer:** {answer}")
 
     user_question = st.text_input("Ask a question about health:")
     if st.button("Get Answer"):
@@ -65,10 +83,12 @@ def main():
         else:
             st.write("Please enter a question.")
             
-# Additional Features (Optional)
-st.sidebar.title("FAQs")
-st.sidebar.write("What is cardiomyopathy?")
-st.sidebar.write("Who is at risk for cardiomyopathy?")
+# Clear button
+    if st.button("Clear"):
+        st.session_state.faq_question = None
+        st.session_state.faq_answer = None
+        st.text_area("Ask a question about heart, lung, or blood health:", value="", key="reset")
+        st.write("")
 
 # Run the app
 if __name__ == "__main__":
